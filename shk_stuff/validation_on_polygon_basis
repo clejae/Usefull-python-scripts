@@ -1,0 +1,38 @@
+import numpy
+from osgeo import gdal
+
+# #### FOLDER PATHS & global variables #### #
+wd = 'B:/temp/temp_clemens/ComparisonBrightCorrMethods/'
+
+# LOAD RASTER DATA
+raster = gdal.Open(wd+ "clawicorr/aggregations/mean.bsq")
+# woody, nonwoody, other1, other2, other3
+
+vali = numpy.genfromtxt('B:/temp/temp_clemens/Validation/EnMAP-Pixel-Validation\ABCD_polygon_estimates_ordered.csv', delimiter=',')
+vali = vali[1:216, 8:10] #woody, nonwoody, other(left out)
+
+predictionSumList = []
+for band in range( 2 ):
+    band += 1
+    rb = raster.GetRasterBand(band)
+    rasterArray = rb.ReadAsArray()
+    predictionSum = numpy.reshape(numpy.mean(rasterArray, 1), (215, 1))
+    predictionSumList.append(predictionSum)
+
+for col in range(vali.shape):
+    col += 1
+    for pred in len(predictionSumList)
+        pred += 1
+        differenceArray = vali[:,col] - predictionSumList[pred]
+
+
+differenceArray = vali[:,0] - predictionSumList[0]
+
+t1 = vali[:,0]
+t2 = predictionSumList[0]
+t1.shape
+t2.shape
+
+t1 = numpy.reshape(t1, (215,1))
+
+differenceArray = t1 - t2
